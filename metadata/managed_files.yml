@@ -1,0 +1,34 @@
+---
+locked_files:
+- bin/
+- bin/*
+- metadata/
+- metadata/*
+- env/
+- env/OPENSHIFT_AEROGEAR_PUSH_EAP_DIR
+- env/OPENSHIFT_AEROGEAR_PUSH_EAP_LOG_DIR
+- env/OPENSHIFT_AEROGEAR_PUSH_EAP_JDK*
+- env/OPENSHIFT_AEROGEAR_PUSH_EAP_VERSION
+- env/OPENSHIFT_AEROGEAR_PUSH_EAP_TOKEN_KEY
+- env/M2_HOME
+- standalone/deployments/*
+- usr/modules/org/
+- usr/modules/org/jboss/
+- usr/modules/org/jboss/aerogear/
+- usr/modules/org/jboss/aerogear/simplepush/
+- usr/modules/org/jboss/aerogear/simplepush/main/
+- usr/modules/org/jboss/aerogear/simplepush/main/*
+- versions/0.8.0/modules/org/
+- versions/0.8.0/modules/org/jboss/
+- versions/0.8.0/modules/org/jboss/aerogear/
+- versions/0.8.0/modules/org/jboss/aerogear/simplepush/
+- versions/0.8.0/modules/org/jboss/aerogear/simplepush/main/
+- versions/0.8.0/modules/org/jboss/aerogear/simplepush/main/*
+- versions/0.9.0/modules/org/
+- versions/0.9.0/modules/org/jboss/
+- versions/0.9.0/modules/org/jboss/aerogear/
+- versions/0.9.0/modules/org/jboss/aerogear/simplepush/
+- versions/0.9.0/modules/org/jboss/aerogear/simplepush/main/
+- versions/0.9.0/modules/org/jboss/aerogear/simplepush/main/*
+processed_templates:
+- '**/*.erb'
