@@ -12,7 +12,7 @@ echo "$version" > "$OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/env/OPENSHIFT_AEROGEAR_PUSH_
 ln -s ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/standalone/log ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/logs
 
 # Install the Keycloak Server WAR
-cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/auth-server.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments/auth-server.war
+#cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/auth-server.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments/auth-server.war
 
 # Install the UnifiedPush Server WAR
 cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/ag-push.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments/ROOT.war
