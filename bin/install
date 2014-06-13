@@ -41,5 +41,5 @@ client_result "Aerogear Push Server on JBoss EAP 6 added.  Please make note of t
 client_result ""
 client_result "           User: admin"
 client_result "       Password: 123"
-client_result ' Connection URL: https://$OPENSHIFT_APP_DNS:8443/simplepush'
+client_result ' Connection URL: https://$OPENSHIFT_APP_DNS'
 client_result ""
