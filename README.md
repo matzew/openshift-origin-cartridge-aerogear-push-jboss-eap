@@ -40,7 +40,7 @@ Currently, if your AeroGear Push Server application is [idled by OpenShift](http
 
 ### Template Repository Layout
 
-    .openshift/        Location for OpenShift specific files
+      .openshift/        Location for OpenShift specific files
       action_hooks/    See the Action Hooks documentation [1]
       markers/         See the Markers section [2]
 
@@ -53,13 +53,12 @@ Currently, if your AeroGear Push Server application is [idled by OpenShift](http
 The `aerogear-push` cartridge provides several environment variables to reference for ease
 of use:
 
-    OPENSHIFT_AEROGEAR_PUSH_IP                         The IP address used to bind JBossAS
-    OPENSHIFT_AEROGEAR_PUSH_HTTP_PORT                  The JBossAS listening port
-    OPENSHIFT_AEROGEAR_PUSH_TOKEN_KEY                  The token key for the SimplePush Server
-    OPENSHIFT_AEROGEAR_PUSH_CLUSTER_PORT               
-    OPENSHIFT_AEROGEAR_PUSH_MESSAGING_PORT             
-    OPENSHIFT_AEROGEAR_PUSH_MESSAGING_THROUGHPUT_PORT  
-    OPENSHIFT_AEROGEAR_PUSH_REMOTING_PORT              
+    OPENSHIFT_AEROGEAR_PUSH_EAP_IP                         The IP address used to bind JBossAS
+    OPENSHIFT_AEROGEAR_PUSH_EAP_HTTP_PORT                  The JBossAS listening port
+    OPENSHIFT_AEROGEAR_PUSH_EAP_CLUSTER_PORT               
+    OPENSHIFT_AEROGEAR_PUSH_EAP_MESSAGING_PORT             
+    OPENSHIFT_AEROGEAR_PUSH_EAP_MESSAGING_THROUGHPUT_PORT  
+    OPENSHIFT_AEROGEAR_PUSH_EAP_REMOTING_PORT              
     JAVA_OPTS_EXT                                      Appended to JAVA_OPTS prior to invoking the Java VM
 
 For more information about environment variables, consult the

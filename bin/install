@@ -18,9 +18,9 @@ cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments
 #cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/ag-push.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments/ROOT.war
 cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/ag-push.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments/ag-push.war
 
-# Generate the token key for SimplePush
-#token_key=$(generate_password)
-#echo "$token_key" > ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/env/OPENSHIFT_AEROGEAR_PUSH_EAP_TOKEN_KEY
+echo $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR
+
+tree $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR
 
 JBOSS_HOME=/etc/alternatives/jbosseap-6
 pushd $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR 1> /dev/null
