@@ -12,18 +12,10 @@ echo "$version" > "$OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/env/OPENSHIFT_AEROGEAR_PUSH_
 ln -s ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/standalone/log ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/logs
 
 # Install the Keycloak Server WAR
-#cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/auth-server.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments/auth-server.war
+cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/auth-server.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments/auth-server.war
 
 # Install the UnifiedPush Server WAR
-cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/ag-push.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments/ROOT.war
-
-# Add the AeroGear SimplePush module
-mkdir -p ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/usr/modules/org/jboss/aerogear/simplepush/main
-ln -s ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/modules/org/jboss/aerogear/simplepush/main/* ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/usr/modules/org/jboss/aerogear/simplepush/main
-
-# Generate the token key for SimplePush
-token_key=$(generate_password)
-echo "$token_key" > ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/env/OPENSHIFT_AEROGEAR_PUSH_EAP_TOKEN_KEY
+cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/ag-push.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments/ag-push.war
 
 JBOSS_HOME=/etc/alternatives/jbosseap-6
 pushd $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR 1> /dev/null

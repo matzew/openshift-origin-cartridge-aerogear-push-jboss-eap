@@ -1,9 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<server xmlns="urn:jboss:domain:1.3">
+<server xmlns="urn:jboss:domain:1.1">
 
     <extensions>
-        <extension module="org.jboss.aerogear.simplepush"/>
         <extension module="org.jboss.as.clustering.infinispan"/>
         <extension module="org.jboss.as.clustering.jgroups"/>
         <extension module="org.jboss.as.cmp"/>
@@ -52,13 +51,6 @@
     </management>
 
     <profile>
-        <subsystem xmlns="urn:org.jboss.aerogear.simplepush:1.0">
-            <server socket-binding="simplepush" password="${env.OPENSHIFT_AEROGEAR_PUSH_TOKEN_KEY}" endpoint-tls="true" endpoint-socket-binding="simplepush-notify">
-                <datastore>
-                    <jpa datasource-jndi-name="java:jboss/datasources/SimplePushDS" persistence-unit="SimplePushPU"/>
-                </datastore>
-            </server>
-        </subsystem>
         <subsystem xmlns="urn:jboss:domain:logging:1.1">
             <!--console-handler name="CONSOLE">
                 <level name="INFO"/>
@@ -122,23 +114,7 @@
                 	</validation>
                 	<pool>
 						<flush-strategy>IdleConnections</flush-strategy>
-						<allow-multiple-users/>
 					</pool>
-                </datasource>
-                <datasource jndi-name="java:jboss/datasources/SimplePushDS" enabled="${mysql.enabled}" use-java-context="true" pool-name="SimplePushDS" use-ccm="true">
-                    <connection-url>jdbc:mysql://${env.OPENSHIFT_MYSQL_DB_HOST}:${env.OPENSHIFT_MYSQL_DB_PORT}/${env.OPENSHIFT_APP_NAME}</connection-url>
-                    <driver>mysql</driver>
-                    <security>
-                      <user-name>${env.OPENSHIFT_MYSQL_DB_USERNAME}</user-name>
-                      <password>${env.OPENSHIFT_MYSQL_DB_PASSWORD}</password>
-                    </security>
-                    <validation>
-                        <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
-                        <background-validation>true</background-validation>
-                    </validation>
-                    <pool>
-                        <flush-strategy>IdleConnections</flush-strategy>
-                    </pool>
                 </datasource>
                 <datasource jndi-name="java:jboss/datasources/PostgreSQLDS" enabled="${postgresql.enabled}" use-java-context="true" pool-name="PostgreSQLDS" use-ccm="true">
                     <connection-url>jdbc:postgresql://${env.OPENSHIFT_POSTGRESQL_DB_HOST}:${env.OPENSHIFT_POSTGRESQL_DB_PORT}/${env.OPENSHIFT_APP_NAME}</connection-url>
@@ -153,7 +129,6 @@
                 	</validation>
                 	<pool>
 						<flush-strategy>IdleConnections</flush-strategy>
-						<allow-multiple-users/>
 					</pool>
                 </datasource>
                 <drivers>
@@ -273,26 +248,25 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:jaxrs:1.0"/>
         <subsystem xmlns="urn:jboss:domain:jca:1.1">
-			<archive-validation enabled="true" fail-on-error="true" fail-on-warn="false"/>
-            <bean-validation enabled="true"/>
-			<default-workmanager>
-				<short-running-threads>
-					<core-threads count="50" />
-					<queue-length count="50" />
-					<max-threads count="50" />
-					<keepalive-time time="10" unit="seconds" />
-				</short-running-threads>
-				<long-running-threads>
-					<core-threads count="50" />
-					<queue-length count="50" />
-					<max-threads count="50" />
-					<keepalive-time time="10" unit="seconds" />
-				</long-running-threads>
-			</default-workmanager>
-			<cached-connection-manager />
-		</subsystem>
+            <archive-validation enabled="true" fail-on-error="true" fail-on-warn="false"/>
+            <bean-validation enabled="false"/>
+            <default-workmanager>
+                <short-running-threads>
+                        <core-threads count="10"/>
+                        <queue-length count="10" />
+                        <max-threads count="10" />
+                    <keepalive-time time="10" unit="seconds"/>
+                </short-running-threads>
+                <long-running-threads>
+                        <core-threads count="10"/>
+                        <queue-length count="10" />
+                        <max-threads count="10" />
+                    <keepalive-time time="10" unit="seconds"/>
+                </long-running-threads>
+            </default-workmanager>
+        </subsystem>
         <subsystem xmlns="urn:jboss:domain:jdr:1.0"/>
-        <subsystem xmlns="urn:jboss:domain:jgroups:1.1" default-stack="tcp">
+        <subsystem xmlns="urn:jboss:domain:jgroups:1.0" default-stack="tcp">
             <stack name="tcp">
                 <transport type="TCP" socket-binding="jgroups-tcp"> 
                 	<property name="external_addr">${env.OPENSHIFT_GEAR_DNS}</property>
@@ -302,7 +276,7 @@
                     <property name="defer_client_bind_addr">true</property>
                 </transport>
                 <protocol type="TCPPING">
-                	<property name="timeout">3000</property>
+                	<property name="timeout">30000</property>
                 	<property name="initial_hosts">${env.OPENSHIFT_AEROGEAR_PUSH_EAP_CLUSTER}</property>
                 	<property name="port_range">0</property>
                 	<property name="num_initial_members">1</property>
@@ -353,13 +327,21 @@
  	            <scheduled-thread-pool-max-size>${messaging.scheduled.thread.pool.max.size}</scheduled-thread-pool-max-size>
 
                 <connectors>
-					<netty-connector name="netty" socket-binding="messaging" />
-					<in-vm-connector name="in-vm" server-id="0" />
-				</connectors>
-				<acceptors>
-					<netty-acceptor name="netty" socket-binding="messaging" />
-					<in-vm-acceptor name="in-vm" server-id="0" />
-				</acceptors>
+                    <netty-connector name="netty" socket-binding="messaging"/>
+                    <netty-connector name="netty-throughput" socket-binding="messaging-throughput">
+                        <param key="batch-delay" value="50"/>
+                    </netty-connector>
+                    <in-vm-connector name="in-vm" server-id="0"/>
+                </connectors>
+
+                <acceptors>
+                    <netty-acceptor name="netty" socket-binding="messaging"/>
+                    <netty-acceptor name="netty-throughput" socket-binding="messaging-throughput">
+                        <param key="batch-delay" value="50"/>
+                        <param key="direct-deliver" value="false"/>
+                    </netty-acceptor>
+                    <in-vm-acceptor name="in-vm" server-id="0"/>
+                </acceptors>
 
                 <!--broadcast-groups>
                     <broadcast-group name="bg-group1">
@@ -438,11 +420,19 @@
                     </pooled-connection-factory>
                 </jms-connection-factories>
 
+                <jms-destinations>
+                    <jms-queue name="testQueue">
+                        <entry name="queue/test"/>
+                        <entry name="java:jboss/exported/jms/queue/test"/>
+                    </jms-queue>
+                    <jms-topic name="testTopic">
+                        <entry name="topic/test"/>
+                        <entry name="java:jboss/exported/jms/topic/test"/>
+                    </jms-topic>
+                </jms-destinations>
             </hornetq-server>
         </subsystem>
-		<subsystem xmlns="urn:jboss:domain:naming:1.2">
-			<remote-naming />
-		</subsystem>
+        <subsystem xmlns="urn:jboss:domain:naming:1.1"/>
         <subsystem xmlns="urn:jboss:domain:osgi:1.2" activation="lazy">
             <properties>
                 <!-- Specifies the beginning start level of the framework -->
@@ -465,16 +455,11 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:resource-adapters:1.0"/>
         <subsystem xmlns="urn:jboss:domain:sar:1.0"/>
-        <subsystem xmlns="urn:jboss:domain:security:1.2">
-           <security-domains>
+        <subsystem xmlns="urn:jboss:domain:security:1.1">
+            <security-domains>
                 <security-domain name="other" cache-type="default">
                     <authentication>
-                        <login-module code="Remoting" flag="optional">
-                            <module-option name="password-stacking" value="useFirstPass"/>
-                        </login-module>
-                        <login-module code="RealmDirect" flag="required">
-                            <module-option name="password-stacking" value="useFirstPass"/>
-                        </login-module>
+                        <login-module code="UsersRoles" flag="required"/>
                     </authentication>
                 </security-domain>
                 <security-domain name="jboss-web-policy" cache-type="default">
@@ -487,10 +472,18 @@
                         <policy-module code="Delegating" flag="required"/>
                     </authorization>
                 </security-domain>
+                <security-domain name="messaging" cache-type="default">
+                    <authentication>
+                        <login-module code="UsersRoles" flag="required">
+                            <module-option name="usersProperties" value="${jboss.server.config.dir}/application-users.properties"/>
+                            <module-option name="rolesProperties" value="${jboss.server.config.dir}/application-roles.properties"/>
+                        </login-module>
+                    </authentication>
+                </security-domain>
             </security-domains>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:threads:1.1"/>
-        <subsystem xmlns="urn:jboss:domain:transactions:1.2">
+        <subsystem xmlns="urn:jboss:domain:transactions:1.1">
             <core-environment>
                 <process-id>
                     <uuid/>
@@ -547,8 +540,6 @@
         <socket-binding name="messaging-throughput" port="5455"/>
         <socket-binding name="osgi-http" interface="management" port="8090"/>
         <socket-binding name="remoting" port="4447"/>
-        <socket-binding name="simplepush" port="8676"/>
-        <socket-binding name="simplepush-notify" interface="external" port="8443"/>
         <socket-binding name="txn-recovery-environment" port="4712"/>
         <socket-binding name="txn-status-manager" port="4713"/>
         <outbound-socket-binding name="mail-smtp">
@@ -556,3 +547,4 @@
         </outbound-socket-binding>
     </socket-binding-group>
 </server>
+

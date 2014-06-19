@@ -213,7 +213,7 @@ while true; do
          if [ "$WAIT_STATUS" -gt 128 ]; then
             SIGNAL=`expr $WAIT_STATUS - 128`
             SIGNAL_NAME=`kill -l $SIGNAL`
-            echo "*** JBossEAP process ($JBOSS_PID) received $SIGNAL_NAME signal ***" >&2
+            echo "*** JBossAS process ($JBOSS_PID) received $SIGNAL_NAME signal ***" >&2
          fi
       done
       if [ "$WAIT_STATUS" -lt 127 ]; then
@@ -235,3 +235,4 @@ while true; do
       exit $JBOSS_STATUS
    fi
 done
+

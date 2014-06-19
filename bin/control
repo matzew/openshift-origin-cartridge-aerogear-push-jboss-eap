@@ -92,6 +92,7 @@ function start() {
     echo "$PROCESS_ID" > ${JBOSSEAP_PID_FILE}
     if ! ishttpup; then
         echo "Timed out waiting for http listening port"
+        # cat ${OPENSHIFT_TMP_DIR}/${cartridge_type}.log
         exit 1
     fi
   fi
