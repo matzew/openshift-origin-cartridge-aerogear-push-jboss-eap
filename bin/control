@@ -90,10 +90,9 @@ function start() {
     ${JBOSSEAP_BIN_DIR}/standalone.sh > ${OPENSHIFT_TMP_DIR}/${cartridge_type}.log 2>&1 &
     PROCESS_ID=$!
     echo "$PROCESS_ID" > ${JBOSSEAP_PID_FILE}
-    echo ${OPENSHIFT_TMP_DIR}/${cartridge_type}.log
     if ! ishttpup; then
         echo "Timed out waiting for http listening port"
-        cat ${OPENSHIFT_TMP_DIR}/${cartridge_type}.log
+        # cat ${OPENSHIFT_TMP_DIR}/${cartridge_type}.log
         exit 1
     fi
   fi
