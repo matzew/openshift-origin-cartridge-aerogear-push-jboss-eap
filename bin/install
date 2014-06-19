@@ -17,10 +17,6 @@ cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments
 # Install the UnifiedPush Server WAR
 cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/ag-push.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments/ag-push.war
 
-echo $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR
-
-tree $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR
-
 JBOSS_HOME=/etc/alternatives/jbosseap-6
 pushd $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR 1> /dev/null
   ln -s ${JBOSS_HOME}/jboss-modules.jar
