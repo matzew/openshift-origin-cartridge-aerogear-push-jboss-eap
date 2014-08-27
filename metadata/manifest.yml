@@ -1,12 +1,12 @@
 Name: aerogear-push
 Cartridge-Short-Name: AEROGEAR_PUSH_EAP
-Display-Name: AeroGear Push Server 0.11.0 on JBoss Enterprise Application Platform 6
+Display-Name: AeroGear UnifiedPush Server 1.0.0 on JBoss Enterprise Application Platform 6
 Description: "Provides the AeroGear UnifiedPush Server, a server that allows sending push notifications to different mobile platforms. Runs on JBoss Enterprise Application Platform 6."
-Version: 0.11.0
-License: LGPL
-License-Url: http://www.gnu.org/copyleft/lesser.txt
+Version: 1.0.0
+License: "ASL 2.0"
+License-Url: http://www.apache.org/licenses/LICENSE-2.0.txt
 Vendor: AeroGear
-Cartridge-Version: 0.0.1
+Cartridge-Version: 1.0.0
 Cartridge-Vendor: aerogear
 Categories:
   - service

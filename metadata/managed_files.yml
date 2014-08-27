@@ -15,8 +15,8 @@ locked_files:
 - usr/modules/org/
 - usr/modules/org/jboss/
 - usr/modules/org/jboss/aerogear/
-- versions/0.11.0/modules/org/
-- versions/0.11.0/modules/org/jboss/
-- versions/0.11.0/modules/org/jboss/aerogear/
+- versions/1.0.0/modules/org/
+- versions/1.0.0/modules/org/jboss/
+- versions/1.0.0/modules/org/jboss/aerogear/
 processed_templates:
 - '**/*.erb'

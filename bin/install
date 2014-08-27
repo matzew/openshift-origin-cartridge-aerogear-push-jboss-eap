@@ -11,11 +11,11 @@ echo "$version" > "$OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/env/OPENSHIFT_AEROGEAR_PUSH_
 
 ln -s ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/standalone/log ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/logs
 
-# Install the Keycloak Server WAR
-cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/auth-server.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments/auth-server.war
-
-# Install the UnifiedPush Server WAR
-cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/ag-push.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments/ag-push.war
+# Install ROOT, which redirects to /ag-push
+cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/ROOT.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments
+# Install the UnifiedPush Server WARs (auth and core)
+cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/auth-server.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments
+cp ${OPENSHIFT_AEROGEAR_PUSH_EAP_DIR}/versions/${version}/standalone/deployments/ag-push.war $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR/standalone/deployments
 
 JBOSS_HOME=/etc/alternatives/jbosseap-6
 pushd $OPENSHIFT_AEROGEAR_PUSH_EAP_DIR 1> /dev/null
